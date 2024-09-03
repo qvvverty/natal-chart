@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AstroChart Project</title>
+</head>
+
+<body>
+  <div class="form-container">
+    <form>
+      <div class="input-group">
+        <div class="single-input">
+          <input type="text" name="latitude" value="12">
+          <p class="input-caption">Latitude</p>
+        </div>
+        <div class="single-input">
+          <input type="text" name="longitude" value="12">
+          <p class="input-caption">Longitude</p>
+        </div>
+      </div>
+      <div class="input-group">
+        <div class="single-input">
+          <input type="text" name="day" value="12">
+          <p class="input-caption">Day</p>
+        </div>
+        <div class="single-input">
+          <input type="text" name="month" value="12">
+          <p class="input-caption">Month</p>
+        </div>
+        <div class="single-input">
+          <input type="text" name="year" value="1980">
+          <p class="input-caption">Year</p>
+        </div>
+      </div>
+      <div class="input-group">
+        <div class="single-input">
+          <input type="text" name="hour" value="12">
+          <p class="input-caption">Hour</p>
+        </div>
+        <div class="single-input">
+          <input type="text" name="minute" value="12">
+          <p class="input-caption">Minute</p>
+        </div>
+      </div>
+      <div class="checkbox-input">
+        <input class="checkbox" type="checkbox" name="showAspects">
+        <p class="input-caption">Show Aspects</p>
+      </div>
+
+      <div class="single-input">
+        <input type="text" name="size" value="800">
+        <p class="input-caption">Chart size, px</p>
+      </div>
+
+      <input class="submit-button" type="submit" value="Submit">
+      <div class="error-container">
+        <p class="error-text"></p>
+      </div>
+    </form>
+  </div>
+
+  <div id="chart-container"></div>
+
+  <script src="bundle.js"></script>
+</body>
+
+</html>

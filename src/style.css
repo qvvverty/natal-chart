@@ -1,0 +1,54 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f2f2f2;
+  color: #333;
+}
+
+.form-container {
+  padding-left: 10px;
+}
+
+.input-group {
+  display: flex;
+}
+
+.single-input {
+  margin-right: 10px;
+}
+
+.checkbox-input {
+  display: flex;
+  align-items: baseline;
+}
+
+.checkbox {
+  margin-right: 5px;
+}
+
+.form-container input {
+  display: block;
+  margin-top: 10px;
+}
+
+.input-caption {
+  font-size: 14px;
+}
+
+.submit-button {
+  padding: 5px;
+}
+
+.error-container {
+  margin-top: 10px;
+}
+
+.error-text {
+  font-size: 14px;
+  color: red;
+}
