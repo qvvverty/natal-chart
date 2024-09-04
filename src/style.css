@@ -10,6 +10,10 @@ body {
   color: #333;
 }
 
+input::placeholder {
+  color: lightgray;
+}
+
 .form-container {
   padding-left: 10px;
 }
@@ -51,4 +55,20 @@ body {
 .error-text {
   font-size: 14px;
   color: red;
+}
+
+.results-wrapper {
+  display: flex;
+}
+
+.astrodata-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+}
+
+.body-info {
+  margin-right: 10px;
+  margin-bottom: 30px;
+  width: 200px;
 }

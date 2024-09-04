@@ -12,35 +12,35 @@
     <form>
       <div class="input-group">
         <div class="single-input">
-          <input type="text" name="latitude" value="12">
+          <input type="text" name="latitude" placeholder="±180">
           <p class="input-caption">Latitude</p>
         </div>
         <div class="single-input">
-          <input type="text" name="longitude" value="12">
+          <input type="text" name="longitude" placeholder="±180">
           <p class="input-caption">Longitude</p>
         </div>
       </div>
       <div class="input-group">
         <div class="single-input">
-          <input type="text" name="day" value="12">
+          <input type="text" name="day" placeholder="1-31">
           <p class="input-caption">Day</p>
         </div>
         <div class="single-input">
-          <input type="text" name="month" value="12">
+          <input type="text" name="month" placeholder="1-12">
           <p class="input-caption">Month</p>
         </div>
         <div class="single-input">
-          <input type="text" name="year" value="1980">
+          <input type="text" name="year" placeholder="1000-9999">
           <p class="input-caption">Year</p>
         </div>
       </div>
       <div class="input-group">
         <div class="single-input">
-          <input type="text" name="hour" value="12">
+          <input type="text" name="hour" placeholder="0-23">
           <p class="input-caption">Hour</p>
         </div>
         <div class="single-input">
-          <input type="text" name="minute" value="12">
+          <input type="text" name="minute" placeholder="0-59">
           <p class="input-caption">Minute</p>
         </div>
       </div>
@@ -50,7 +50,7 @@
       </div>
 
       <div class="single-input">
-        <input type="text" name="size" value="800">
+        <input type="text" name="size" value="600">
         <p class="input-caption">Chart size, px</p>
       </div>
 
@@ -61,7 +61,10 @@
     </form>
   </div>
 
-  <div id="chart-container"></div>
+  <div class="results-wrapper">
+    <div id="chart-container"></div>
+    <div class="astrodata-container"></div>
+  </div>
 
   <script src="bundle.js"></script>
 </body>

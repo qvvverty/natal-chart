@@ -1,7 +1,9 @@
-import { makeHoroscope, drawChart } from "./natalChart";
+import { makeDrawData, drawChart, makeHoroscope } from "./natalChart";
+import drawAstroData from './drawAstroData.js';
 
 const errorEl = document.querySelector('p.error-text');
 const chartEl = document.querySelector('#chart-container');
+const astroDataEl = document.querySelector('.astrodata-container');
 
 const formError = (isError) => {
   if (isError) {
@@ -22,7 +24,7 @@ export default function handleFormSubmit(event) {
   // Sanitize FormData, convert to numbers
   const horoscopeData = {
     year: Number(formData.get('year')),
-    month: Number(formData.get('month')) - 1, // Это нужно проверить
+    month: Number(formData.get('month')),
     day: Number(formData.get('day')),
     hour: Number(formData.get('hour')),
     minute: Number(formData.get('minute')),
@@ -51,19 +53,28 @@ export default function handleFormSubmit(event) {
     return;
   }
 
-  // Generate horoscope data
+  // Generate horoscope
   const horoscope = makeHoroscope(horoscopeData);
+
+  // Generate draw data
+  const drawData = makeDrawData(horoscope);
 
   const viewOptions = {
     size: formData.get('size'),
     showAspects: formData.get('showAspects'),
   };
-
-  // Draw the chart
-  drawChart(horoscope, viewOptions);
-
+  
   // Reset error message
   formError(false);
+
+  // Clear the chart
+  chartEl.innerHTML = '';
+
+  // Draw the chart
+  drawChart(drawData, viewOptions);
+
+  // Draw astrological data
+  drawAstroData(horoscope, astroDataEl);
 }
 
 // Add event listener to the form

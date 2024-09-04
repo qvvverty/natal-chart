@@ -23,6 +23,10 @@ export const makeHoroscope = (params) => {
     language: 'en'
   });
 
+  return horoscope;
+}
+
+export const makeDrawData = (horoscope) => {
   const planets = {};
   horoscope.CelestialBodies.all.map(planet => {
     if (planet.label !== 'Sirius' && planet.label !== 'Chiron') {
