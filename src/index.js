@@ -1,2 +1,2 @@
-import './formHandler.js';
+import './FormHandler.js';
 import './style.css';

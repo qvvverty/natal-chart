@@ -1,9 +1,20 @@
-import { makeDrawData, drawChart, makeHoroscope } from "./natalChart";
-import drawAstroData from './drawAstroData.js';
+import mapInit from "./YMap.js";
+import { makeDrawData, drawChart, makeHoroscope } from "./NatalChart.js";
+import drawAstroData from './DrawAstroData.js';
 
 const errorEl = document.querySelector('p.error-text');
 const chartEl = document.querySelector('#chart-container');
 const astroDataEl = document.querySelector('.astrodata-container');
+const latitudeInput = document.querySelector('input[name="latitude"]');
+const longitudeInput = document.querySelector('input[name="longitude"]');
+
+export const fillCoordinates = (longitude, latitude) => {
+  latitudeInput.value = latitude;
+  longitudeInput.value = longitude;
+};
+
+// Map initialization
+ymaps.ready(mapInit);
 
 const formError = (isError) => {
   if (isError) {
@@ -63,7 +74,7 @@ export default function handleFormSubmit(event) {
     size: formData.get('size'),
     showAspects: formData.get('showAspects'),
   };
-  
+
   // Reset error message
   formError(false);
 

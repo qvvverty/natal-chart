@@ -57,6 +57,11 @@ input::placeholder {
   color: red;
 }
 
+.map-container {
+  width: 600px;
+  height: 400px;
+}
+
 .results-wrapper {
   display: flex;
 }
