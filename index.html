@@ -13,41 +13,80 @@
     <form>
       <div class="input-group">
         <div class="single-input">
-          <input type="text" name="latitude" placeholder="±180">
+          <input type="text" name="latitude" placeholder="±180" value="43.31">
           <p class="input-caption">Latitude</p>
         </div>
         <div class="single-input">
-          <input type="text" name="longitude" placeholder="±180">
+          <input type="text" name="longitude" placeholder="±180" value="45.69">
           <p class="input-caption">Longitude</p>
         </div>
       </div>
       <div class="input-group">
         <div class="single-input">
-          <input type="text" name="day" placeholder="1-31">
+          <input type="text" name="day" placeholder="1-31" value="18">
           <p class="input-caption">Day</p>
         </div>
         <div class="single-input">
-          <input type="text" name="month" placeholder="1-12">
+          <input type="text" name="month" placeholder="1-12" value="3">
           <p class="input-caption">Month</p>
         </div>
         <div class="single-input">
-          <input type="text" name="year" placeholder="1000-9999">
+          <input type="text" name="year" placeholder="1000-9999" value="1987">
           <p class="input-caption">Year</p>
         </div>
       </div>
       <div class="input-group">
         <div class="single-input">
-          <input type="text" name="hour" placeholder="0-23">
+          <input type="text" name="hour" placeholder="0-23" value="9">
           <p class="input-caption">Hour</p>
         </div>
         <div class="single-input">
-          <input type="text" name="minute" placeholder="0-59">
+          <input type="text" name="minute" placeholder="0-59" value="20">
           <p class="input-caption">Minute</p>
         </div>
       </div>
-      <div class="checkbox-input">
-        <input class="checkbox" type="checkbox" name="showAspects">
-        <p class="input-caption">Show Aspects</p>
+
+      <div class="checkbox-group">
+        <div class="checkbox-input">
+          <input class="checkbox" type="checkbox" name="conjunctionAspect" disabled>
+          <p class="input-caption">Conjunction</p>
+        </div>
+        <div class="checkbox-input">
+          <input class="checkbox" type="checkbox" name="oppositionAspect" checked>
+          <p class="input-caption">Opposition</p>
+        </div>
+        <div class="checkbox-input">
+          <input class="checkbox" type="checkbox" name="squareAspect" checked>
+          <p class="input-caption">Square</p>
+        </div>
+        <div class="checkbox-input">
+          <input class="checkbox" type="checkbox" name="trineAspect" checked>
+          <p class="input-caption">Trine</p>
+        </div>
+        <div class="checkbox-input">
+          <input class="checkbox" type="checkbox" name="septileAspect" checked>
+          <p class="input-caption">Septile</p>
+        </div>
+        <div class="checkbox-input">
+          <input class="checkbox" type="checkbox" name="sextileAspect" checked>
+          <p class="input-caption">Sextile</p>
+        </div>
+        <div class="checkbox-input">
+          <input class="checkbox" type="checkbox" name="quincunxAspect" checked>
+          <p class="input-caption">Quincunx</p>
+        </div>
+        <div class="checkbox-input">
+          <input class="checkbox" type="checkbox" name="biQuintileAspect" checked>
+          <p class="input-caption">BiQuintile</p>
+        </div>
+        <div class="checkbox-input">
+          <input class="checkbox" type="checkbox" name="semi-sextileAspect" checked>
+          <p class="input-caption">Semi-Sextile</p>
+        </div>
+        <div class="checkbox-input">
+          <input class="checkbox" type="checkbox" name="semi-squareAspect" checked>
+          <p class="input-caption">Semi-Square</p>
+        </div>
       </div>
 
       <div class="single-input">
@@ -67,6 +106,7 @@
   <div class="results-wrapper">
     <div id="chart-container"></div>
     <div class="astrodata-container"></div>
+    <div class="aspectsdata-container"></div>
   </div>
 
   <script src="bundle.js"></script>
