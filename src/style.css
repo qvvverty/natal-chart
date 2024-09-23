@@ -26,9 +26,16 @@ input::placeholder {
   margin-right: 10px;
 }
 
+.checkbox-group {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .checkbox-input {
   display: flex;
   align-items: baseline;
+  width: 110px;
+  margin-right: 10px;
 }
 
 .checkbox {
@@ -63,17 +70,48 @@ input::placeholder {
 }
 
 .results-wrapper {
-  display: flex;
+  /* display: flex; */
 }
 
 .astrodata-container {
   display: flex;
   flex-wrap: wrap;
-  align-content: center;
+  /* align-content: center; */
+  border: 1px solid darkgrey;
+  padding: 10px;
 }
 
 .body-info {
   margin-right: 10px;
   margin-bottom: 30px;
   width: 200px;
+}
+
+.body-info__header {
+  font-weight: bold;
+}
+
+.aspectsdata-container {
+  display: flex;
+  align-items: start;
+  flex-wrap: wrap;
+  padding: 10px;
+}
+
+.aspect-info {
+  margin-right: 10px;
+  width: 160px;
+  height: 90px;
+}
+
+.aspect-info__header {
+  font-weight: bold;
+}
+
+.aspect-color {
+  width: 20px;
+  height: 20px;
+  margin-top: 5px;
+  border: 1px solid black;
+  border-radius: 50%;
 }

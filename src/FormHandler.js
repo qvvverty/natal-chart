@@ -1,10 +1,11 @@
 import mapInit from "./YMap.js";
 import { makeDrawData, drawChart, makeHoroscope } from "./NatalChart.js";
-import drawAstroData from './DrawAstroData.js';
+import { drawAstroData, drawAspectsData } from "./utils.js";
 
 const errorEl = document.querySelector('p.error-text');
 const chartEl = document.querySelector('#chart-container');
 const astroDataEl = document.querySelector('.astrodata-container');
+const aspectsDataEl = document.querySelector('.aspectsdata-container');
 const latitudeInput = document.querySelector('input[name="latitude"]');
 const longitudeInput = document.querySelector('input[name="longitude"]');
 
@@ -72,8 +73,14 @@ export default function handleFormSubmit(event) {
 
   const viewOptions = {
     size: formData.get('size'),
-    showAspects: formData.get('showAspects'),
+    aspects: []
   };
+
+  formData.forEach((value, key) => {
+    if (key.endsWith('Aspect') && value === 'on') {
+      viewOptions.aspects.push(key.replace('Aspect', ''));
+    }
+  });
 
   // Reset error message
   formError(false);
@@ -82,10 +89,13 @@ export default function handleFormSubmit(event) {
   chartEl.innerHTML = '';
 
   // Draw the chart
-  drawChart(drawData, viewOptions);
+  const aspectsToDisplay = drawChart(drawData, horoscope, viewOptions);
 
   // Draw astrological data
   drawAstroData(horoscope, astroDataEl);
+
+  // Draw aspects data
+  drawAspectsData(aspectsToDisplay, aspectsDataEl);
 }
 
 // Add event listener to the form

@@ -1,4 +1,4 @@
-import { fillCoordinates } from "./FormHandler";
+import { fillCoordinates } from "./FormHandler.js";
 
 export default function mapInit() {
   const map = new ymaps.Map("map-container", {
