@@ -15,7 +15,7 @@ export const makeHoroscope = (params) => {
 
   const horoscope = new Horoscope({
     origin: origin,
-    houseSystem: "whole-sign",
+    houseSystem: 'koch', // - 'whole-sign'
     zodiac: "tropical",
     aspectPoints: ['bodies', 'points'], // - angles
     aspectWithPoints: ['bodies', 'points'], // - angles
@@ -40,8 +40,8 @@ export const makeDrawData = (horoscope) => {
   planets.Lilith = [horoscope.CelestialPoints.lilith.ChartPosition.Ecliptic.DecimalDegrees];
 
   const cusps = [];
-  horoscope.ZodiacCusps.map(cusp => {
-    cusps.push(cusp.ChartPosition.Ecliptic.DecimalDegrees);
+  horoscope._houses.map(house => {
+    cusps.push(house.ChartPosition.StartPosition.Ecliptic.DecimalDegrees);
   });
 
   return { planets, cusps };
@@ -50,13 +50,14 @@ export const makeDrawData = (horoscope) => {
 export const drawChart = (horoscopeData, horoscope = undefined, options = undefined) => {
   const drawOptions = {
     // STROKE_ONLY: true
+    SHIFT_IN_DEGREES: 180 - horoscopeData.cusps[0]
   }
 
   const chart = new AstroChart('chart-container', options.size, options.size, drawOptions);
 
   const radix = chart.radix(horoscopeData);
 
-  const aspectsToDisplay = aspectsConstructor(options.aspects, horoscope);
+    const aspectsToDisplay = aspectsConstructor(options.aspects, horoscope);
 
   // Debug
   // console.log(aspectsToDisplay);

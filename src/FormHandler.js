@@ -85,8 +85,10 @@ export default function handleFormSubmit(event) {
   // Reset error message
   formError(false);
 
-  // Clear the chart
+  // Clear the result containers
   chartEl.innerHTML = '';
+  astroDataEl.innerHTML = '';
+  aspectsDataEl.innerHTML = '';
 
   // Draw the chart
   const aspectsToDisplay = drawChart(drawData, horoscope, viewOptions);

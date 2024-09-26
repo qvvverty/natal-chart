@@ -48,7 +48,6 @@ const aspectColors = {
 }
 
 export function drawAstroData(horoscope, element) {
-  element.innerHTML = '';
   const descriptions = [];
 
   horoscope.CelestialBodies.all.map(planet => {
@@ -67,7 +66,7 @@ export function drawAstroData(horoscope, element) {
 const describeBody = (planet) => {
   let description = `<div class="body-info"><span class="body-info__header">${bodies[planet.key]}</span><br>`;
   description += `Sign: ${planet.Sign.label}<br>`;
-  description += `House: ${houses[planet.House.label]}<br>`;
+  description += `House: ${houses[planet?.House?.label]}<br>`; // Sometimes House is undefined in whole-sign system
   description += `Degree 360°: ${planet.ChartPosition.Ecliptic.ArcDegreesFormatted}<br>`;
   description += `Degree 30°: ${planet.ChartPosition.Ecliptic.ArcDegreesFormatted30}</div>`;
 
@@ -109,16 +108,11 @@ export const aspectsConstructor = (aspectTypes, horoscope) => {
       aspectsToDisplay.push(aspectToDraw);
     }
   }
-  
-  // Debug
-  // console.log(aspectsToDisplay);
 
   return aspectsToDisplay;
 }
 
 export const drawAspectsData = (aspectsToDisplay, element) => {
-  element.innerHTML = '';
-
   for (const aspect of aspectsToDisplay) {
     let aspectDescription = `<div class="aspect-info"><span class="aspect-info__header">${aspect.aspect.name}</span><br>`;
     aspectDescription += `Point 1: ${aspect.point.name}<br>`;
