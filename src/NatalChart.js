@@ -1,6 +1,6 @@
 import AstroChart from '@astrodraw/astrochart';
 import { Origin, Horoscope } from 'circular-natal-horoscope-js';
-import { aspectsConstructor } from './utils';
+import { aspectsConstructor, drawConjunctions } from './utils';
 
 export const makeHoroscope = (params) => {
   const origin = new Origin({
@@ -50,17 +50,18 @@ export const makeDrawData = (horoscope) => {
 export const drawChart = (horoscopeData, horoscope = undefined, options = undefined) => {
   const drawOptions = {
     // STROKE_ONLY: true
-    SHIFT_IN_DEGREES: 180 - horoscopeData.cusps[0]
+    SHIFT_IN_DEGREES: 180 - horoscopeData.cusps[0],
   }
 
   const chart = new AstroChart('chart-container', options.size, options.size, drawOptions);
 
   const radix = chart.radix(horoscopeData);
 
-    const aspectsToDisplay = aspectsConstructor(options.aspects, horoscope);
+  if (options.aspects.includes('conjunction')) {
+    drawConjunctions(radix, horoscope, options);
+  }
 
-  // Debug
-  // console.log(aspectsToDisplay);
+  const aspectsToDisplay = aspectsConstructor(options.aspects, horoscope);
 
   if (aspectsToDisplay.length) {
     radix.aspects(aspectsToDisplay);

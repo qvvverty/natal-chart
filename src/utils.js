@@ -34,7 +34,7 @@ const houses = {
 }
 
 const aspectColors = {
-  conjunction: '#000000',
+  conjunction: '#008000',
   opposition: '#FF0000',
   square: '#990000',
   trine: '#00FF00',
@@ -59,7 +59,7 @@ export function drawAstroData(horoscope, element) {
   horoscope.CelestialPoints.all.map(point => {
     descriptions.push(describeBody(point));
   });
-  
+
   element.innerHTML = descriptions.join('<br><br>');
 }
 
@@ -122,4 +122,58 @@ export const drawAspectsData = (aspectsToDisplay, element) => {
 
     element.innerHTML += aspectDescription;
   }
+}
+
+const drawConjunction = (svgElement, centerX, centerY, radius) => {
+  const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+  circle.setAttribute('cx', centerX);
+  circle.setAttribute('cy', centerY);
+  circle.setAttribute('r', radius);
+  circle.setAttribute('stroke', 'green');
+  circle.setAttribute('stroke-width', '2');
+  circle.setAttribute('fill', 'none');
+  svgElement.appendChild(circle);
+};
+
+export const drawConjunctions = (radix, horoscope, options) => {
+  const conjunctions = [];
+
+  if (horoscope._aspects.types.conjunction.length) {
+    for (const conjunction of horoscope._aspects.types.conjunction) {
+      const excludedLabels = ['Sirius', 'Chiron', 'North Node', 'South Node', 'Lilith'];
+      if (excludedLabels.includes(conjunction.point1Label) || excludedLabels.includes(conjunction.point2Label)) {
+        continue;
+      }
+
+      const conjunctionCoordinates = [];
+      const point1Coordinates = [];
+      const point2Coordinates = [];
+
+      for (const point of radix.locatedPoints) {
+        if (point.name === conjunction.point1Label) {
+          point1Coordinates.push(point.x);
+          point1Coordinates.push(point.y);
+        }
+
+        if (point.name === conjunction.point2Label) {
+          point2Coordinates.push(point.x);
+          point2Coordinates.push(point.y);
+        }
+
+        if (point1Coordinates.length === 2 && point2Coordinates.length === 2) {
+          break;
+        }
+      }
+
+      conjunctionCoordinates.push((point1Coordinates[0] + point2Coordinates[0]) / 2);
+      conjunctionCoordinates.push((point1Coordinates[1] + point2Coordinates[1]) / 2);
+
+      conjunctions.push(conjunctionCoordinates);
+    }
+  }
+
+  const conjunctionRadius = options.size / 25;
+  conjunctions.forEach(conjunction => {
+    drawConjunction(radix.paper.DOMElement, conjunction[0], conjunction[1], conjunctionRadius);
+  });
 }
