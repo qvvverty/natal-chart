@@ -5,7 +5,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AstroChart Project</title>
-  <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&apikey=10c2d76a-611d-40ae-801e-694cc9f00542" type="text/javascript"></script>
+  <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&apikey=10c2d76a-611d-40ae-801e-694cc9f00542"
+    type="text/javascript"></script>
 </head>
 
 <body>
@@ -23,8 +24,8 @@
       </div>
       <div class="input-group">
         <div class="single-input">
-          <input type="text" name="day" placeholder="1-31" value="18">
-          <p class="input-caption">Day</p>
+          <input type="text" name="date" placeholder="1-31" value="18">
+          <p class="input-caption">Date</p>
         </div>
         <div class="single-input">
           <input type="text" name="month" placeholder="1-12" value="3">
@@ -89,6 +90,49 @@
         </div>
       </div>
 
+      <hr class="form-divider">
+      <div class="checkbox-input">
+        <input class="checkbox" type="checkbox" name="transit" checked>
+        <p class="input-caption">Transit</p>
+      </div>
+      <div class="input-group">
+        <div class="single-input">
+          <input type="text" name="transitLatitude" placeholder="±180" value="53.51">
+          <p class="input-caption">Latitude</p>
+        </div>
+        <div class="single-input">
+          <input type="text" name="transitLongitude" placeholder="±180" value="30.32">
+          <p class="input-caption">Longitude</p>
+        </div>
+      </div>
+      <div class="input-group">
+        <div class="input-group">
+          <div class="single-input">
+            <input type="text" name="transitDate" placeholder="1-31" value="5">
+            <p class="input-caption">Date</p>
+          </div>
+          <div class="single-input">
+            <input type="text" name="transitMonth" placeholder="1-12" value="11">
+            <p class="input-caption">Month</p>
+          </div>
+          <div class="single-input">
+            <input type="text" name="transitYear" placeholder="1000-9999" value="2024">
+            <p class="input-caption">Year</p>
+          </div>
+        </div>
+      </div>
+      <div class="input-group">
+        <div class="single-input">
+          <input type="text" name="transitHour" placeholder="0-23" value="13">
+          <p class="input-caption">Hour</p>
+        </div>
+        <div class="single-input">
+          <input type="text" name="transitMinute" placeholder="0-59" value="25">
+          <p class="input-caption">Minute</p>
+        </div>
+      </div>
+      <hr class="form-divider">
+
       <div class="single-input">
         <input type="text" name="size" value="600">
         <p class="input-caption">Chart size, px</p>
@@ -104,7 +148,7 @@
   <div id="map-container" class="map-container"></div>
 
   <div class="results-wrapper">
-    <div id="chart-container"></div>
+    <div class="chart-container" id="chart-container"></div>
     <div class="astrodata-container"></div>
     <div class="aspectsdata-container"></div>
   </div>

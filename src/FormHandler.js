@@ -33,52 +33,27 @@ export default function handleFormSubmit(event) {
   const form = event.target;
   const formData = new FormData(form);
 
-  // Sanitize FormData, convert to numbers
-  const horoscopeData = {
-    year: Number(formData.get('year')),
-    month: Number(formData.get('month')),
-    day: Number(formData.get('day')),
-    hour: Number(formData.get('hour')),
-    minute: Number(formData.get('minute')),
-    latitude: parseFloat(formData.get('latitude').replace(',', '.')),
-    longitude: parseFloat(formData.get('longitude').replace(',', '.')),
-  };
-
-  // Validate form data
-  if (
-    isNaN(horoscopeData.year) ||
-    isNaN(horoscopeData.month) ||
-    isNaN(horoscopeData.day) ||
-    isNaN(horoscopeData.hour) ||
-    isNaN(horoscopeData.minute) ||
-    isNaN(horoscopeData.latitude) ||
-    isNaN(horoscopeData.longitude) ||
-    horoscopeData.day > 31 ||
-    horoscopeData.month > 12 ||
-    horoscopeData.year < 1000 ||
-    horoscopeData.year > 9999 ||
-    horoscopeData.hour > 24 ||
-    horoscopeData.minute > 59
-  ) {
-    // Handle invalid form data
+  // Generate horoscope
+  const horoscope = makeHoroscope(formData);
+  if (!horoscope) {
     formError(true);
     return;
   }
 
-  // Generate horoscope
-  const horoscope = makeHoroscope(horoscopeData);
-
   // Generate draw data
-  const drawData = makeDrawData(horoscope);
+  horoscope.natalDrawData = makeDrawData(horoscope.natalHoroscope);
+  if (horoscope.transit) {
+    horoscope.transitDrawData = makeDrawData(horoscope.transitHoroscope);
+  }
 
-  const viewOptions = {
+  horoscope.viewOptions = {
     size: formData.get('size'),
     aspects: []
   };
 
   formData.forEach((value, key) => {
     if (key.endsWith('Aspect') && value === 'on') {
-      viewOptions.aspects.push(key.replace('Aspect', ''));
+      horoscope.viewOptions.aspects.push(key.replace('Aspect', ''));
     }
   });
 
@@ -90,8 +65,10 @@ export default function handleFormSubmit(event) {
   astroDataEl.innerHTML = '';
   aspectsDataEl.innerHTML = '';
 
-  // Draw the chart
-  const aspectsToDisplay = drawChart(drawData, horoscope, viewOptions);
+  // Draw the chart. Aspects are returned from this function
+  const aspectsToDisplay = drawChart(horoscope);
+  // Add aspectsToDisplay to horoscope object
+  horoscope.aspectsToDisplay = aspectsToDisplay;
 
   // Draw astrological data
   drawAstroData(horoscope, astroDataEl);

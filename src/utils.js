@@ -47,16 +47,96 @@ const aspectColors = {
   'semi-square': '#FF9999'
 }
 
+const horoscopeParams = [
+  'year',
+  'month',
+  'date',
+  'hour',
+  'minute',
+  'latitude',
+  'longitude'
+]
+
+const isHoroDataValid = (data) => {
+  if (
+    isNaN(data.year) ||
+    isNaN(data.month) ||
+    isNaN(data.date) ||
+    isNaN(data.hour) ||
+    isNaN(data.minute) ||
+    isNaN(data.latitude) ||
+    isNaN(data.longitude) ||
+    data.day < 1 ||
+    data.day > 31 ||
+    data.month < 0 ||
+    data.month > 11 ||
+    data.year < 1000 ||
+    data.year > 9999 ||
+    data.hour < 0 ||
+    data.hour > 24 ||
+    data.minute < 0 ||
+    data.minute > 59 ||
+    data.latitude < -90 ||
+    data.latitude > 90 ||
+    data.longitude < -180 ||
+    data.longitude > 180
+  ) return true
+  else return false
+}
+
+export const makeHoroscopeData = (formData) => {
+  const horoscopeData = {
+    natalData: {},
+    transit: false,
+    transitData: {}
+  };
+
+  horoscopeParams.forEach((param, index) => {
+    if (index < 5) {
+      horoscopeData.natalData[param] = Number(formData.get(param));
+    } else {
+      horoscopeData.natalData[param] = parseFloat(formData.get(param).replace(',', '.'));
+    }
+  });
+  horoscopeData.natalData.month -= 1; // 0 = January, 11 = December!
+
+  if (formData.get('transit') === 'on') {
+    horoscopeData.transit = true;
+
+    horoscopeParams.forEach((param, index) => {
+      const transitParam = 'transit' + param.charAt(0).toUpperCase() + param.slice(1);
+      if (index < 5) {
+        horoscopeData.transitData[param] = Number(formData.get(transitParam));
+      } else {
+        horoscopeData.transitData[param] = parseFloat(formData.get(transitParam).replace(',', '.'));
+      }
+    });
+
+    horoscopeData.transitData.month -= 1; // 0 = January, 11 = December!
+  }
+
+  // Validate data
+  if (isHoroDataValid(horoscopeData.natalData)) {
+    return;
+  }
+
+  if (horoscopeData.transit && isHoroDataValid(horoscopeData.transitData)) {
+    return;
+  }
+
+  return horoscopeData;
+}
+
 export function drawAstroData(horoscope, element) {
   const descriptions = [];
 
-  horoscope.CelestialBodies.all.map(planet => {
+  horoscope.natalHoroscope.CelestialBodies.all.map(planet => {
     if (planet.label !== 'Sirius' && planet.label !== 'Chiron') {
       descriptions.push(describeBody(planet));
     }
   });
 
-  horoscope.CelestialPoints.all.map(point => {
+  horoscope.natalHoroscope.CelestialPoints.all.map(point => {
     descriptions.push(describeBody(point));
   });
 
@@ -73,28 +153,28 @@ const describeBody = (planet) => {
   return description;
 }
 
-export const aspectsConstructor = (aspectTypes, horoscope) => {
+export const aspectsConstructor = (horoscope) => {
   const aspectsToDisplay = [];
 
-  for (const aspectType of aspectTypes) {
+  for (const aspectType of horoscope.viewOptions.aspects) {
     // Skip if no aspects of this type
-    if (!horoscope._aspects.types[aspectType]) continue;
+    if (!horoscope.natalHoroscope._aspects.types[aspectType]) continue;
 
     let n = 1;
 
-    for (const aspect of horoscope._aspects.types[aspectType]) {
+    for (const aspect of horoscope.natalHoroscope._aspects.types[aspectType]) {
       const aspectToDraw = {
         point: {
           name: aspect.point1Label,
           position:
-            horoscope._celestialBodies?.[aspect.point1Key]?.ChartPosition?.Ecliptic?.DecimalDegrees
-            || horoscope._celestialPoints?.[aspect.point1Key]?.ChartPosition?.Ecliptic?.DecimalDegrees
+            horoscope.natalHoroscope._celestialBodies?.[aspect.point1Key]?.ChartPosition?.Ecliptic?.DecimalDegrees
+            || horoscope.natalHoroscope._celestialPoints?.[aspect.point1Key]?.ChartPosition?.Ecliptic?.DecimalDegrees
         },
         toPoint: {
           name: aspect.point2Label,
           position:
-            horoscope._celestialBodies?.[aspect.point2Key]?.ChartPosition?.Ecliptic?.DecimalDegrees
-            || horoscope._celestialPoints?.[aspect.point2Key]?.ChartPosition?.Ecliptic?.DecimalDegrees
+            horoscope.natalHoroscope._celestialBodies?.[aspect.point2Key]?.ChartPosition?.Ecliptic?.DecimalDegrees
+            || horoscope.natalHoroscope._celestialPoints?.[aspect.point2Key]?.ChartPosition?.Ecliptic?.DecimalDegrees
         },
         aspect: {
           name: aspect.aspectLevelLabel + ' ' + aspectType + ' ' + n++,
@@ -135,11 +215,11 @@ const drawConjunction = (svgElement, centerX, centerY, radius) => {
   svgElement.appendChild(circle);
 };
 
-export const drawConjunctions = (radix, horoscope, options) => {
+export const drawConjunctions = (radix, horoscope) => {
   const conjunctions = [];
 
-  if (horoscope._aspects.types.conjunction.length) {
-    for (const conjunction of horoscope._aspects.types.conjunction) {
+  if (horoscope.natalHoroscope._aspects.types.conjunction.length) {
+    for (const conjunction of horoscope.natalHoroscope._aspects.types.conjunction) {
       const excludedLabels = ['Sirius', 'Chiron', 'North Node', 'South Node', 'Lilith'];
       if (excludedLabels.includes(conjunction.point1Label) || excludedLabels.includes(conjunction.point2Label)) {
         continue;
@@ -172,7 +252,7 @@ export const drawConjunctions = (radix, horoscope, options) => {
     }
   }
 
-  const conjunctionRadius = options.size / 25;
+  const conjunctionRadius = horoscope.viewOptions.size / 25;
   conjunctions.forEach(conjunction => {
     drawConjunction(radix.paper.DOMElement, conjunction[0], conjunction[1], conjunctionRadius);
   });

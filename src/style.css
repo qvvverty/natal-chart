@@ -55,6 +55,10 @@ input::placeholder {
   padding: 5px;
 }
 
+.form-divider {
+  margin: 10px 0;
+}
+
 .error-container {
   margin-top: 10px;
 }
@@ -71,6 +75,15 @@ input::placeholder {
 
 .results-wrapper {
   /* display: flex; */
+}
+
+.chart-container {
+  margin: 20px;
+  padding: 20px;
+}
+
+svg {
+  overflow: visible;
 }
 
 .astrodata-container {
